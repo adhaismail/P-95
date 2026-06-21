@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-role="login">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>PRIMA — Machine Asset Intelligence</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     LOGIN PAGE
+════════════════════════════════════════════════ -->
+<div id="page-login" class="page active">
+  <div class="login-bg">
+    <span class="lb-blob lb-1"></span>
+    <span class="lb-blob lb-2"></span>
+    <span class="lb-blob lb-3"></span>
+    <span class="lb-blob lb-4"></span>
+  </div>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="14" height="14" rx="3" fill="#fff"/>
+            <rect x="22" y="4" width="14" height="14" rx="3" fill="#fff" opacity=".55"/>
+            <rect x="4" y="22" width="14" height="14" rx="3" fill="#fff" opacity=".55"/>
+            <rect x="22" y="22" width="14" height="14" rx="3" fill="#fff"/>
+            <rect x="14" y="14" width="12" height="12" rx="2" fill="var(--accent)"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-name">PRIMA</span>
+          <span class="brand-tagline">Performance Recording and Inspection for Machine Assets</span>
+        </div>
+      </div>
+      <div class="login-divider"></div>
+      <h2 class="login-title">Masuk ke sistem</h2>
+      <div id="login-error" class="alert alert-error hidden">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        Username atau PIN tidak valid.
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="login-username">Username</label>
+        <input class="form-input" id="login-username" type="text" placeholder="Masukkan username" autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="login-pin">PIN</label>
+        <div class="input-with-icon pin-group">
+          <input class="form-input pin-input" id="login-pin" type="password" placeholder="••••" maxlength="6" inputmode="numeric" autocomplete="current-password" />
+          <button class="input-icon-btn" id="toggle-pin" type="button">
+            <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full login-submit-btn" id="login-btn">
+        <span class="btn-text">Masuk</span>
+        <span class="btn-loader hidden"></span>
+      </button>
+      <div class="login-footer">
+        <span class="login-version">v1.0 - PRIMA<br>Bintang Toedjoe (A Kalbe Company)</span>
+        <button class="theme-toggle-btn" id="login-theme-toggle" title="Toggle theme">
+          <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     SUPERVISOR LAYOUT
+════════════════════════════════════════════════ -->
+<div id="page-supervisor" class="page">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <div class="brand-icon brand-icon-sm">
+          <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="14" height="14" rx="3" fill="#fff"/><rect x="22" y="4" width="14" height="14" rx="3" fill="#fff" opacity=".55"/><rect x="4" y="22" width="14" height="14" rx="3" fill="#fff" opacity=".55"/><rect x="22" y="22" width="14" height="14" rx="3" fill="#fff"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--bg-primary)"/></svg>
+        </div>
+        <div class="sidebar-brand-texts">
+          <span class="sidebar-brand-name">PRIMA</span>
+          <span class="sidebar-brand-tagline">Performance Recording and Inspection for Machine Assets</span>
+        </div>
+      </div>
+      <button class="sidebar-close" id="sidebar-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" data-view="dashboard" href="#">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" data-view="pm-schedule" href="#">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <span>Jadwal PM</span>
+      </a>
+      <a class="nav-item" data-view="sparepart-mgmt" href="#">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        <span>Sparepart</span>
+      </a>
+      <a class="nav-item" data-view="machine-history" href="#">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Riwayat Mesin</span>
+      </a>
+
+      <!-- ── RIWAYAT LAINNYA ACCORDION ── -->
+      <div class="nav-accordion" id="nav-accordion-riwayat">
+        <button class="nav-accordion-trigger" id="nav-accordion-riwayat-btn" type="button">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Riwayat Lainnya</span>
+          <svg class="nav-accordion-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-accordion-body" id="nav-accordion-riwayat-body">
+          <a class="nav-item nav-sub-item" data-view="riwayat-requestor" href="#">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <span>Riwayat Requestor</span>
+          </a>
+          <a class="nav-item nav-sub-item" data-view="riwayat-pm" href="#">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 12l2 2 4-4"/></svg>
+            <span>Riwayat Input PM</span>
+          </a>
+          <a class="nav-item nav-sub-item" data-view="riwayat-bd" href="#">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Riwayat Input BD</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        <div class="breadcrumb"><span id="view-title">Dashboard</span></div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-datetime" id="topbar-date"></div>
+        <!-- Zoom controls -->
+        <div class="zoom-controls">
+          <button class="zoom-btn" id="sup-zoom-out" title="Perkecil tampilan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <span class="zoom-level" id="sup-zoom-level">100%</span>
+          <button class="zoom-btn" id="sup-zoom-in" title="Perbesar tampilan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+        <div class="topbar-user">
+          <div class="user-avatar topbar-avatar" id="sup-avatar">SV</div>
+          <div class="topbar-user-info">
+            <span class="topbar-user-name" id="sup-name-sidebar">Supervisor</span>
+            <span class="topbar-user-role" id="sup-role-sidebar">Supervisor</span>
+          </div>
+        </div>
+        <button class="topbar-logout-btn" id="sup-logout" title="Keluar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </button>
+        <button class="topbar-icon-btn" id="sup-theme-toggle" title="Ganti Tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+
+      <!-- ── DASHBOARD VIEW ── -->
+      <section class="view" id="view-dashboard">
+        <!-- Welcome banner -->
+        <div class="sup-welcome">
+          <div class="sup-welcome-text">
+            <h2>Selamat datang, <span id="sup-name-welcome">Supervisor</span> 👋</h2>
+            <p>Berikut ringkasan kondisi mesin hari ini.</p>
+          </div>
+          <div class="sup-welcome-role">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Supervisor
+          </div>
+        </div>
+        <!-- Filter Jenis Mesin -->
+        <div class="dash-filter-bar" id="dashboard-machine-filter">
+          <div class="dash-filter-group">
+            <h3 class="dash-filter-title">Jenis Mesin</h3>
+            <div class="searchable-select-wrap dash-machine-select-wrap" id="dash-machine-wrap">
+              <div class="ss-selected" id="dash-machine-display">Semua Mesin</div>
+              <div class="ss-dropdown hidden" id="dash-machine-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                <div class="ss-list" id="dash-machine-list"></div>
+              </div>
+              <input type="hidden" id="dash-machine-select" value="" />
+            </div>
+          </div>
+          <div class="dash-filter-divider"></div>
+          <div class="dash-filter-group dash-filter-group--sm">
+            <h3 class="dash-filter-title">Bulan</h3>
+            <select class="dash-filter-select" id="dash-filter-month">
+              <option value="">Semua Bulan</option>
+              <option value="1">Januari</option>
+              <option value="2">Februari</option>
+              <option value="3">Maret</option>
+              <option value="4">April</option>
+              <option value="5">Mei</option>
+              <option value="6">Juni</option>
+              <option value="7">Juli</option>
+              <option value="8">Agustus</option>
+              <option value="9">September</option>
+              <option value="10">Oktober</option>
+              <option value="11">November</option>
+              <option value="12">Desember</option>
+            </select>
+          </div>
+          <div class="dash-filter-divider"></div>
+          <div class="dash-filter-group dash-filter-group--xs">
+            <h3 class="dash-filter-title">Tahun</h3>
+            <div class="dash-year-input-wrap">
+              <input class="dash-filter-year-input" type="text" id="dash-filter-year" inputmode="numeric" maxlength="4" placeholder="Semua" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+        <!-- KPI + Status Mesin sejajar dalam satu baris -->
+        <div class="dashboard-top-row">
+          <div class="kpi-grid">
+            <div class="kpi-card glass">
+              <div class="kpi-icon kpi-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-value" data-count="24">24</span>
+                <span class="kpi-label">Sparepart Aktif</span>
+              </div>
+            </div>
+            <div class="kpi-card glass">
+              <div class="kpi-icon kpi-red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/><line x1="4.22" y1="4.22" x2="19.78" y2="19.78"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-value" data-count="3">3</span>
+                <span class="kpi-label">Sparepart Overtime</span>
+              </div>
+            </div>
+            <div class="kpi-card glass">
+              <div class="kpi-icon kpi-yellow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-value" data-count="7">7</span>
+                <span class="kpi-label">Sparepart Akan Overtime</span>
+              </div>
+            </div>
+            <div class="kpi-card glass">
+              <div class="kpi-icon kpi-purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-value" id="kpi-mtbf">—</span>
+                <span class="kpi-label">MTBF (jam)</span>
+              </div>
+            </div>
+            <div class="kpi-card glass">
+              <div class="kpi-icon kpi-orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="kpi-content">
+                <span class="kpi-value" id="kpi-mttr">—</span>
+                <span class="kpi-label">MTTR (jam)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- ── Pie Charts: Sparepart, Jenis Kerusakan, Tindakan Perbaikan, Breakdown per Mesin ── -->
+        <div class="dash-pie-row">
+          <!-- Pie 4: Breakdown per Mesin (hanya tampil saat Semua Mesin dipilih) -->
+          <div class="dash-pie-card glass hidden" id="pie-bd-machine-card">
+            <div class="dash-pie-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;color:var(--orange)"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span>Breakdown per Mesin</span>
+            </div>
+            <div class="dash-pie-body">
+              <canvas id="pie-bd-machine" width="150" height="150"></canvas>
+              <div class="dash-pie-legend" id="pie-bd-machine-legend"></div>
+            </div>
+          </div>
+          <!-- Pie 1: Status Sparepart -->
+          <div class="dash-pie-card glass">
+            <div class="dash-pie-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;color:var(--accent)"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>Status Sparepart</span>
+            </div>
+            <div class="dash-pie-body">
+              <canvas id="pie-sparepart" width="150" height="150"></canvas>
+              <div class="dash-pie-legend" id="pie-sparepart-legend"></div>
+            </div>
+          </div>
+          <!-- Pie 2: Jenis Kerusakan -->
+          <div class="dash-pie-card glass">
+            <div class="dash-pie-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;color:var(--danger)"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span>Jenis Kerusakan</span>
+            </div>
+            <div class="dash-pie-body">
+              <canvas id="pie-failure" width="150" height="150"></canvas>
+              <div class="dash-pie-legend" id="pie-failure-legend"></div>
+            </div>
+          </div>
+          <!-- Pie 3: Tindakan Perbaikan -->
+          <div class="dash-pie-card glass">
+            <div class="dash-pie-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;color:var(--success)"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+              <span>Tindakan Perbaikan</span>
+            </div>
+            <div class="dash-pie-body">
+              <canvas id="pie-action" width="150" height="150"></canvas>
+              <div class="dash-pie-legend" id="pie-action-legend"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Breakdown Bulanan — full width di bawah -->
+        <div class="charts-row">
+          <div class="chart-card glass">
+            <div class="chart-header chart-header-breakdown">
+              <h3 id="bd-chart-title">Breakdown Bulanan</h3>
+              <div class="breakdown-controls">
+                <div class="chart-legend" id="bd-chart-legend">
+                  <span class="legend-dot red"></span> Breakdown
+                  <span class="legend-dot cyan"></span> PM Selesai
+                </div>
+                <div class="breakdown-filters">
+                  <select class="breakdown-select" id="bd-chart-mode">
+                    <option value="bd_pm">Breakdown &amp; PM</option>
+                    <option value="mtbf">MTBF Bulanan</option>
+                    <option value="mttr">MTTR Bulanan</option>
+                  </select>
+                  <select class="breakdown-select" id="bd-filter-month">
+                    <option value="">Semua Bulan</option>
+                    <option value="0">Januari</option>
+                    <option value="1">Februari</option>
+                    <option value="2">Maret</option>
+                    <option value="3">April</option>
+                    <option value="4">Mei</option>
+                    <option value="5">Juni</option>
+                    <option value="6">Juli</option>
+                    <option value="7">Agustus</option>
+                    <option value="8">September</option>
+                    <option value="9">Oktober</option>
+                    <option value="10">November</option>
+                    <option value="11">Desember</option>
+                  </select>
+                  <div class="bd-year-input-wrap">
+                    <input class="bd-year-input" id="bd-filter-year" type="text" inputmode="numeric" maxlength="4" placeholder="Tahun" autocomplete="off" />
+                    <span class="bd-year-input-status" id="bd-year-status"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <canvas id="chart-breakdown" height="200"></canvas>
+          </div>
+        </div>
+        <!-- Lifetime Sparepart Card -->
+        <div class="sp-lifetime-card glass" id="sparepart-lifetime-card">
+          <div class="card-header">
+            <h3 class="sp-lifetime-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;flex-shrink:0"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+              Lifetime Sparepart
+            </h3>
+            <span class="sp-lifetime-machine-badge" id="sp-lifetime-machine-badge">Semua Mesin</span>
+          </div>
+          <div class="sp-lifetime-grid" id="sparepart-lifetime-grid"></div>
+        </div>
+      </section>
+
+      <!-- ── MACHINE HISTORY VIEW ── -->
+      <section class="view" id="view-machine-history">
+        <div class="view-header">
+          <h2>Riwayat Mesin</h2>
+          <p>Rekaman lengkap breakdown, PM, dan penggantian sparepart per mesin</p>
+        </div>
+        <div class="filter-bar glass">
+          <div class="filter-group">
+            <label>Mesin</label>
+            <div class="searchable-select-wrap" id="hist-machine-wrap">
+              <div class="ss-selected" id="hist-machine-display">Semua Mesin</div>
+              <div class="ss-dropdown hidden" id="hist-machine-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                <div class="ss-list" id="hist-machine-list"></div>
+              </div>
+              <input type="hidden" id="hist-machine-select" value="" />
+            </div>
+          </div>
+          <div class="filter-group">
+            <label>Tanggal Dari</label>
+            <input class="form-input" type="date" id="hist-date-from" />
+          </div>
+          <div class="filter-group">
+            <label>Tanggal Sampai</label>
+            <input class="form-input" type="date" id="hist-date-to" />
+          </div>
+          <div class="filter-group">
+            <label>Tipe</label>
+            <select class="form-input" id="hist-type-filter">
+              <option value="">Semua Tipe</option>
+              <option value="breakdown">Breakdown</option>
+              <option value="pm">Preventif</option>
+              <option value="sparepart">Sparepart</option>
+            </select>
+          </div>
+          <div class="filter-group" style="flex:1;min-width:180px">
+            <label>Cari Riwayat</label>
+            <div style="position:relative;display:flex;align-items:center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:9px;width:14px;height:14px;color:var(--text-3);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="form-input" type="text" id="hist-search-input" placeholder="Mesin, teknisi, keterangan…" style="padding-left:30px" autocomplete="off" />
+              <button id="hist-search-clear" title="Hapus pencarian" style="position:absolute;right:7px;background:none;border:none;cursor:pointer;padding:2px;display:none;color:var(--text-3);line-height:1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:13px;height:13px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="hist-filter-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Cari
+          </button>
+          <button class="btn btn-ghost btn-sm" id="hist-reset-btn">Reset</button>
+          <div class="riwayat-count-badge" id="hist-result-count" style="display:none"></div>
+          <button class="btn btn-ghost btn-sm" id="pdf-machine-history-btn" title="Unduh PDF Riwayat Mesin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Unduh PDF
+          </button>
+        </div>
+        <div class="timeline-container glass" id="history-timeline"></div>
+      </section>
+
+      <!-- ── PM SCHEDULE VIEW ── -->
+      <section class="view" id="view-pm-schedule">
+        <div class="view-header">
+          <h2>Jadwal Pemeliharaan Preventif</h2>
+          <p>Rencanakan, tugaskan, dan pantau semua kegiatan PM</p>
+        </div>
+
+        <!-- ── PROSEDUR PM FORM ── -->
+        <div class="prosedur-pm-card glass">
+          <div class="prosedur-pm-card-header">
+            <div class="prosedur-pm-card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;color:var(--accent)"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 12l2 2 4-4"/></svg>
+              <span>Prosedur PM</span>
+            </div>
+            <p class="prosedur-pm-subtitle">Buat daftar prosedur perawatan untuk mesin dan jadwal PM tertentu</p>
+          </div>
+          <div class="prosedur-pm-form-grid">
+            <div class="form-group">
+              <label class="form-label">Mesin <span class="required">*</span></label>
+              <div class="searchable-select-wrap" id="prosedur-machine-wrap">
+                <div class="ss-selected ss-placeholder" id="prosedur-machine-display">-- Pilih Mesin --</div>
+                <div class="ss-dropdown hidden" id="prosedur-machine-dropdown">
+                  <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                  <div class="ss-list" id="prosedur-machine-list"></div>
+                </div>
+                <input type="hidden" id="prosedur-machine-input" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipe Perawatan <span class="required">*</span></label>
+              <select class="form-input" id="prosedur-tipe-input">
+                <option value="">-- Pilih Tipe --</option>
+                <option value="PM 3 Bulanan">PM 3 Bulanan</option>
+                <option value="PM 6 Bulanan">PM 6 Bulanan</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Judul Prosedur PM -->
+          <div class="form-group" style="margin-top:.75rem">
+            <label class="form-label">Judul Prosedur PM <span class="required">*</span></label>
+            <input class="form-input" type="text" id="prosedur-judul-input" placeholder="Contoh: PM 3 Bulanan Ilapak 12" autocomplete="off" />
+          </div>
+
+          <!-- Daftar prosedur dinamis -->
+          <div class="prosedur-list-wrapper">
+            <div class="prosedur-list-header">
+              <span class="prosedur-list-label">Daftar Prosedur</span>
+              <span class="prosedur-count-badge" id="prosedur-count-badge">0 prosedur</span>
+            </div>
+            <div id="prosedur-list-container">
+              <!-- Prosedur items akan ditambahkan secara dinamis -->
+              <div class="prosedur-empty-state" id="prosedur-empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:36px;height:36px;color:var(--text-3)"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                <p>Belum ada prosedur. Klik <strong>"Tambah Prosedur"</strong> untuk mulai menambahkan.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="prosedur-pm-actions">
+            <button class="btn btn-ghost prosedur-add-btn" id="prosedur-add-btn" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              Tambah Prosedur
+            </button>
+            <button class="btn btn-primary" id="prosedur-save-btn" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Simpan Prosedur
+            </button>
+          </div>
+        </div>
+
+        <!-- ── DAFTAR PROSEDUR TERSIMPAN ── -->
+        <div class="prosedur-saved-card glass" id="prosedur-saved-card">
+          <div class="prosedur-saved-header">
+            <div class="prosedur-pm-card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;color:var(--accent)"><path d="M4 6h16M4 10h16M4 14h8"/></svg>
+              <span>Prosedur PM Tersimpan</span>
+            </div>
+            <button class="btn btn-ghost btn-sm prosedur-refresh-btn" id="prosedur-refresh-btn" title="Refresh data">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+              Refresh
+            </button>
+          </div>
+          <div id="prosedur-saved-list" class="prosedur-saved-list">
+            <div class="prosedur-saved-loading" id="prosedur-saved-loading">
+              <span class="btn-loader" style="width:20px;height:20px;border-width:2px"></span>
+              <span>Memuat data…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pm-grid">
+          <div class="pm-table-card glass">
+            <div class="card-header">
+              <h3>Tabel Jadwal</h3>
+              <div style="display:flex;gap:.5rem;align-items:center">
+                <button class="icon-btn" id="refresh-jadwal-btn" title="Refresh tabel jadwal" style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center">
+                  <svg id="refresh-jadwal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+                <button class="btn btn-ghost btn-sm" id="pdf-jadwal-btn" title="Unduh PDF Tabel Jadwal">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                  Unduh PDF
+                </button>
+                <button class="btn btn-primary btn-sm" id="add-pm-btn">+ Tambah Jadwal</button>
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead><tr><th>Mesin</th><th>Tipe</th><th>Tanggal Jadwal</th><th>Prosedur PM</th><th>Status</th></tr></thead>
+                <tbody id="pm-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="pm-calendar glass">
+            <div class="card-header">
+              <h3 id="cal-month-label"></h3>
+              <div class="cal-nav">
+                <button class="icon-btn" id="cal-prev">‹</button>
+                <button class="icon-btn" id="cal-next">›</button>
+              </div>
+            </div>
+            <div class="calendar-grid" id="calendar-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SPAREPART MANAGEMENT VIEW ── -->
+      <section class="view" id="view-sparepart-mgmt">
+        <div class="view-header">
+          <h2>Sparepart Management</h2>
+          <p>Tambah, kelola, dan pantau seluruh sparepart berdasarkan mesin</p>
+        </div>
+
+        <!-- Add Sparepart Form -->
+        <div class="sp-mgmt-form-card glass">
+          <div class="sp-mgmt-form-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;color:var(--accent)"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Tambah Sparepart</span>
+          </div>
+          <div class="sp-mgmt-form-grid">
+            <div class="form-group">
+              <label class="form-label">Nama Sparepart <span class="required">*</span></label>
+              <input class="form-input" type="text" id="sp-name-input" placeholder="Contoh: Pisau Perforasi Ilapak 60 x 22 x 16 MM" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Jenis Mesin <span class="required">*</span></label>
+              <div class="searchable-select-wrap" id="sp-machine-wrap">
+                <div class="ss-selected ss-placeholder" id="sp-machine-display">-- Pilih Mesin --</div>
+                <div class="ss-dropdown hidden" id="sp-machine-dropdown">
+                  <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                  <div class="ss-list" id="sp-machine-list"></div>
+                </div>
+                <input type="hidden" id="sp-machine-input" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Lifetime (hari) <span class="required">*</span></label>
+              <input class="form-input" type="number" id="sp-lifetime-input" placeholder="Contoh: 365" min="1" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Penggantian Terakhir <span class="required">*</span></label>
+              <input class="form-input" type="date" id="sp-last-replace-input" />
+            </div>
+          </div>
+          <div class="sp-mgmt-form-footer">
+            <button class="btn btn-primary" id="sp-add-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M12 5v14M5 12h14"/></svg>
+              Tambah Sparepart
+            </button>
+          </div>
+        </div>
+
+        <!-- Sparepart List -->
+        <div class="sp-mgmt-list-card glass">
+          <div class="sp-mgmt-list-header">
+            <h3 class="sp-mgmt-list-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+              Daftar Sparepart
+            </h3>
+            <div class="sp-mgmt-toolbar">
+              <div class="sp-mgmt-toolbar-row">
+                <div class="sp-search-wrap">
+                  <svg class="sp-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <input class="sp-search-input" type="text" id="sp-search-input" placeholder="Cari nama sparepart…" autocomplete="off" />
+                </div>
+                <div class="searchable-select-wrap sp-machine-filter-wrap" id="sp-filter-machine-wrap">
+                  <div class="ss-selected" id="sp-filter-machine-display">Semua Mesin</div>
+                  <div class="ss-dropdown hidden" id="sp-filter-machine-dropdown">
+                    <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                    <div class="ss-list" id="sp-filter-machine-list"></div>
+                  </div>
+                  <input type="hidden" id="sp-filter-machine-input" value="" />
+                </div>
+                <select class="sp-sort-select" id="sp-sort-select">
+                  <option value="status">Urutkan: Kritis → Aktif</option>
+                  <option value="name">Urutkan: Nama A–Z</option>
+                  <option value="life_asc">Urutkan: Sisa Life ↑</option>
+                  <option value="life_desc">Urutkan: Sisa Life ↓</option>
+                </select>
+                <button class="btn btn-ghost btn-sm" id="pdf-sparepart-btn" title="Unduh PDF Daftar Sparepart">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                  PDF
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="sp-mgmt-count" id="sp-mgmt-count">Memuat data…</div>
+          <div class="sp-mgmt-grid" id="sp-mgmt-grid"></div>
+        </div>
+      </section>
+
+      <!-- ── RIWAYAT REQUESTOR VIEW ── -->
+      <section class="view" id="view-riwayat-requestor">
+        <div class="view-header">
+          <h2>Riwayat Requestor</h2>
+          <p>Rekaman seluruh laporan kerusakan yang pernah dikirimkan oleh pemohon</p>
+        </div>
+        <div class="riwayat-filter-bar glass">
+          <div class="riwayat-filter-group">
+            <label class="riwayat-filter-label">Bulan</label>
+            <select class="form-input riwayat-select" id="riwayat-req-month">
+              <option value="">Semua Bulan</option>
+              <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
+              <option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option>
+              <option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option>
+              <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+            </select>
+          </div>
+          <div class="riwayat-filter-group">
+            <label class="riwayat-filter-label">Tahun</label>
+            <select class="form-input riwayat-select" id="riwayat-req-year"></select>
+          </div>
+          <button class="btn btn-primary btn-sm" id="riwayat-req-filter-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Filter
+          </button>
+          <button class="btn btn-ghost btn-sm" id="riwayat-req-reset-btn">Reset</button>
+          <div class="riwayat-count-badge" id="riwayat-req-count">— data</div>
+          <button class="btn btn-ghost btn-sm" id="pdf-riwayat-req-btn" title="Unduh PDF Riwayat Requestor">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Unduh PDF
+          </button>
+        </div>
+        <div class="riwayat-table-card glass">
+          <div class="riwayat-table-header">
+            <h3 class="riwayat-table-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--accent)"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              Laporan Kerusakan dari Requestor
+            </h3>
+            <button class="btn btn-ghost btn-sm" id="riwayat-req-refresh-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+              Refresh
+            </button>
+          </div>
+          <div class="riwayat-table-wrap">
+            <table class="riwayat-table" id="riwayat-req-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Tgl / Waktu</th>
+                  <th>No. WR</th>
+                  <th>Mesin</th>
+                  <th>Jenis Kerusakan</th>
+                  <th>Deskripsi</th>
+                  <th>Sejak Kapan</th>
+                  <th>Nama Pelapor</th>
+                  <th>Keterangan</th>
+                  <th>Status</th>
+                  <th>Unduh PDF</th>
+                </tr>
+              </thead>
+              <tbody id="riwayat-req-tbody">
+                <tr><td colspan="11" class="riwayat-empty-cell">
+                  <div class="riwayat-loading-state">
+                    <span class="btn-loader" style="width:18px;height:18px;border-width:2px;border-color:var(--border-md);border-top-color:var(--accent)"></span>
+                    <span>Memuat data…</span>
+                  </div>
+                </td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── RIWAYAT INPUT PREVENTIVE MAINTENANCE VIEW ── -->
+      <section class="view" id="view-riwayat-pm">
+        <div class="view-header">
+          <h2>Riwayat Input Preventive Maintenance</h2>
+          <p>Rekaman seluruh input kegiatan perawatan preventif yang dicatat oleh teknisi</p>
+        </div>
+        <div class="riwayat-filter-bar glass">
+          <div class="riwayat-filter-group">
+            <label class="riwayat-filter-label">Bulan</label>
+            <select class="form-input riwayat-select" id="riwayat-pm-month">
+              <option value="">Semua Bulan</option>
+              <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
+              <option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option>
+              <option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option>
+              <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+            </select>
+          </div>
+          <div class="riwayat-filter-group">
+            <label class="riwayat-filter-label">Tahun</label>
+            <select class="form-input riwayat-select" id="riwayat-pm-year"></select>
+          </div>
+          <button class="btn btn-primary btn-sm" id="riwayat-pm-filter-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Filter
+          </button>
+          <button class="btn btn-ghost btn-sm" id="riwayat-pm-reset-btn">Reset</button>
+          <div class="riwayat-count-badge" id="riwayat-pm-count">— data</div>
+          <button class="btn btn-ghost btn-sm" id="pdf-riwayat-pm-btn" title="Unduh PDF Riwayat PM">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Unduh PDF
+          </button>
+        </div>
+        <div class="riwayat-table-card glass">
+          <div class="riwayat-table-header">
+            <h3 class="riwayat-table-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--success)"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 12l2 2 4-4"/></svg>
+              Input Preventive Maintenance
+            </h3>
+            <button class="btn btn-ghost btn-sm" id="riwayat-pm-refresh-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+              Refresh
+            </button>
+          </div>
+          <div class="riwayat-table-wrap">
+            <table class="riwayat-table" id="riwayat-pm-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Tgl / Waktu</th>
+                  <th>Mesin</th>
+                  <th>Waktu Mulai</th>
+                  <th>Waktu Selesai</th>
+                  <th>Hasil Prosedur</th>
+                  <th>Nama Teknisi</th>
+                  <th>Status</th>
+                  <th>Unduh PDF</th>
+                </tr>
+              </thead>
+              <tbody id="riwayat-pm-tbody">
+                <tr><td colspan="9" class="riwayat-empty-cell">
+                  <div class="riwayat-loading-state">
+                    <span class="btn-loader" style="width:18px;height:18px;border-width:2px;border-color:var(--border-md);border-top-color:var(--success)"></span>
+                    <span>Memuat data…</span>
+                  </div>
+                </td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── RIWAYAT INPUT BREAKDOWN MAINTENANCE VIEW ── -->
+      <section class="view" id="view-riwayat-bd">
+        <div class="view-header">
+          <h2>Riwayat Input Breakdown Maintenance</h2>
+          <p>Rekaman seluruh input penanganan kerusakan / breakdown yang dicatat oleh teknisi</p>
+        </div>
+        <div class="riwayat-filter-bar glass">
+          <div class="riwayat-filter-group">
+            <label class="riwayat-filter-label">Bulan</label>
+            <select class="form-input riwayat-select" id="riwayat-bd-month">
+              <option value="">Semua Bulan</option>
+              <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
+              <option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option>
+              <option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option>
+              <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+            </select>
+          </div>
+          <div class="riwayat-filter-group">
+            <label class="riwayat-filter-label">Tahun</label>
+            <select class="form-input riwayat-select" id="riwayat-bd-year"></select>
+          </div>
+          <button class="btn btn-primary btn-sm" id="riwayat-bd-filter-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Filter
+          </button>
+          <button class="btn btn-ghost btn-sm" id="riwayat-bd-reset-btn">Reset</button>
+          <div class="riwayat-count-badge" id="riwayat-bd-count">— data</div>
+          <button class="btn btn-ghost btn-sm" id="pdf-riwayat-bd-btn" title="Unduh PDF Riwayat BD">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Unduh PDF
+          </button>
+        </div>
+        <div class="riwayat-table-card glass">
+          <div class="riwayat-table-header">
+            <h3 class="riwayat-table-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--danger)"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Input Breakdown Maintenance
+            </h3>
+            <button class="btn btn-ghost btn-sm" id="riwayat-bd-refresh-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+              Refresh
+            </button>
+          </div>
+          <div class="riwayat-table-wrap">
+            <table class="riwayat-table" id="riwayat-bd-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Tgl / Waktu</th>
+                  <th>No. WR</th>
+                  <th>Mesin</th>
+                  <th>Jenis Kerusakan</th>
+                  <th>Deskripsi Kerusakan</th>
+                  <th>Tindakan Perbaikan</th>
+                  <th>Sparepart Diganti</th>
+                  <th>Teknisi</th>
+                  <th>Durasi BD (jam)</th>
+                  <th>Status Akhir</th>
+                  <th>Unduh PDF</th>
+                </tr>
+              </thead>
+              <tbody id="riwayat-bd-tbody">
+                <tr><td colspan="12" class="riwayat-empty-cell">
+                  <div class="riwayat-loading-state">
+                    <span class="btn-loader" style="width:18px;height:18px;border-width:2px;border-color:var(--border-md);border-top-color:var(--danger)"></span>
+                    <span>Memuat data…</span>
+                  </div>
+                </td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PROSEDUR DETAIL PAGE
+════════════════════════════════════════════════ -->
+<div id="page-prosedur-detail" class="page">
+  <div class="main-wrapper" style="margin-left:0">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="back-btn prosedur-back-btn" id="prosedur-detail-close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="breadcrumb">
+          <span class="prosedur-breadcrumb-parent">Jadwal PM</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;opacity:.4"><path d="M9 18l6-6-6-6"/></svg>
+          <span id="prosedur-detail-title">Detail Prosedur</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost btn-sm" id="prosedur-detail-cancel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Kembali
+        </button>
+        <button class="btn btn-primary btn-sm hidden" id="prosedur-detail-save">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Simpan Perubahan
+        </button>
+      </div>
+    </header>
+    <main class="main-content">
+      <div id="prosedur-detail-body" class="prosedur-detail-body-page">
+        <!-- Diisi secara dinamis -->
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     TECHNICIAN LAYOUT — hanya 4 kartu, tanpa sidebar/header
+════════════════════════════════════════════════ -->
+<div id="page-technician" class="page">
+  <div class="tech-layout">
+
+    <!-- Top header bar: PRIMA brand (left), datetime + user actions (right) -->
+    <div class="tech-float-bar">
+      <div class="tech-role-badge">
+        <div class="brand-icon brand-icon-sm">
+          <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="14" height="14" rx="3" fill="#fff"/><rect x="22" y="4" width="14" height="14" rx="3" fill="#fff" opacity=".55"/><rect x="4" y="22" width="14" height="14" rx="3" fill="#fff" opacity=".55"/><rect x="22" y="22" width="14" height="14" rx="3" fill="#fff"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--bg-2, #fff)"/></svg>
+        </div>
+        <div class="tech-role-info">
+          <span class="tech-role-name">PRIMA</span>
+          <span class="tech-role-tagline">Performance Recording and Inspection for Machine Assets</span>
+        </div>
+      </div>
+      <div class="tech-float-actions">
+        <div class="topbar-datetime" id="tech-header-date"></div>
+        <div class="tech-header-user">
+          <span class="tech-header-name" id="tech-header-name">Technician</span>
+          <span class="tech-header-role">Teknisi</span>
+        </div>
+        <div class="user-avatar tech-user-avatar" id="tech-avatar">TC</div>
+        <button class="topbar-logout-btn" id="tech-logout" title="Keluar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </button>
+        <button class="topbar-icon-btn" id="tech-theme-toggle" title="Ganti Tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="tech-content">
+
+      <!-- HOME: 4 kartu saja -->
+      <div class="tech-view active" id="tech-home">
+        <div class="sup-welcome tech-welcome-banner">
+          <div class="sup-welcome-text">
+            <h2>Selamat datang, <span id="tech-name-display">Technician</span> 👋</h2>
+            <p>Apa yang ingin anda lakukan?</p>
+          </div>
+          <div class="sup-welcome-role">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+            Teknisi
+          </div>
+        </div>
+        <div class="tech-grid">
+          <button class="tech-card" data-techview="pm-input">
+            <div class="tech-card-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <span class="tech-card-label">Preventive<br>Maintenance</span>
+            <div class="tech-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </button>
+          <button class="tech-card" data-techview="bd-input">
+            <div class="tech-card-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+            </div>
+            <span class="tech-card-label">Breakdown<br>Maintenance</span>
+            <div class="tech-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </button>
+          <button class="tech-card" data-techview="machine-hist">
+            <div class="tech-card-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <span class="tech-card-label">Riwayat<br>Mesin</span>
+            <div class="tech-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </button>
+          <button class="tech-card" data-techview="sparepart">
+            <div class="tech-card-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <span class="tech-card-label">Kondisi<br>Sparepart</span>
+            <div class="tech-card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </button>
+        </div>
+        <!-- Sync info bar at bottom -->
+        <div class="tech-sync-bar hidden">
+          <div class="sync-item">
+            <span class="sync-icon sync-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <span>Semua data tersinkronisasi dengan<br><strong>sistem</strong></span>
+          </div>
+          <div class="sync-divider"></div>
+          <div class="sync-item">
+            <span class="sync-icon sync-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></span>
+            <div>
+              <span style="font-size:.8rem;color:var(--text-2)">Sinkronisasi terakhir</span><br>
+              <strong style="font-size:.8rem">Baru saja</strong> <span class="sync-dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PM Input Form -->
+      <div class="tech-view" id="tech-pm-input">
+        <div class="tech-view-header">
+          <button class="back-btn" data-back="tech-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <h2>Preventive Maintenance</h2>
+        </div>
+
+        <!-- Daftar Jadwal PM dari Supervisor -->
+        <div class="tech-laporan-section">
+          <div class="tech-laporan-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--accent)"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span>Jadwal PM dari Supervisor</span>
+            <button class="btn btn-ghost btn-sm" id="refresh-jadwal-pm-btn" title="Refresh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </button>
+          </div>
+          <div id="tech-pm-jadwal-list"></div>
+        </div>
+
+        <!-- Section Perawatan Mandiri -->
+        <div class="laporan-mandiri-section">
+          <div class="laporan-section-title laporan-mandiri-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;color:var(--accent)">
+              <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+            </svg>
+            Perawatan Mandiri Teknisi
+          </div>
+          <div class="laporan-mandiri-desc">Gunakan ini untuk mencatat perawatan yang Anda lakukan sendiri tanpa jadwal dari supervisor.</div>
+          <button class="btn btn-primary laporan-mandiri-btn" id="btn-pm-mandiri" onclick="openPMMandiri()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            Laporan Mandiri
+          </button>
+        </div>
+
+        <!-- Form PM (Jadwal & Mandiri) -->
+        <div class="tech-form glass hidden" id="pm-form-wrapper">
+          <!-- Banner referensi jadwal asal -->
+          <div class="laporan-asal-banner hidden" id="pm-jadwal-asal-banner"></div>
+          <!-- Hidden input untuk ID jadwal asal -->
+          <input type="hidden" id="pm-jadwal-asal-id" />
+
+          <div class="form-group">
+            <label class="form-label">Pilih Mesin <span class="required">*</span></label>
+            <div class="searchable-select-wrap" id="pm-machine-wrap">
+              <div class="ss-selected" id="pm-machine-display">-- Pilih Mesin --</div>
+              <div class="ss-dropdown hidden" id="pm-machine-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                <div class="ss-list" id="pm-machine-list"></div>
+              </div>
+              <input type="hidden" id="pm-machine" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Waktu Perbaikan Dimulai <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="datetime-local" id="pm-start-time" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Waktu Perbaikan Berakhir <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="datetime-local" id="pm-end-time" />
+          </div>
+
+          <!-- Prosedur PM dynamic section -->
+          <div class="form-group" id="pm-prosedur-section">
+            <label class="form-label">Prosedur PM</label>
+            <div id="pm-prosedur-hint" class="pm-prosedur-hint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:32px;height:32px;color:var(--text-3)"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+              <p>Pilih jadwal PM di atas agar prosedur tampil otomatis,<br>atau gunakan <strong>Laporan Mandiri</strong> untuk pengisian bebas.</p>
+            </div>
+            <div id="pm-prosedur-rows"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nama Teknisi <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="text" id="pm-tech-name" placeholder="Nama lengkap Anda" />
+          </div>
+
+          <button class="btn btn-primary btn-submit-tech" id="pm-submit-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            Kirim Laporan Preventive Maintenance
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Breakdown Input Form -->
+      <div class="tech-view" id="tech-bd-input">
+        <div class="tech-view-header">
+          <button class="back-btn" data-back="tech-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <h2>Breakdown Maintenance</h2>
+        </div>
+
+        <!-- Daftar Laporan Kerusakan dari Requestor -->
+        <div class="tech-laporan-section">
+          <div class="tech-laporan-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--danger)"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Laporan Kerusakan Masuk</span>
+            <button class="btn btn-ghost btn-sm" id="refresh-laporan-btn" title="Refresh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </button>
+          </div>
+          <div id="tech-bd-laporan-list"></div>
+        </div>
+
+        <div class="tech-form glass hidden" id="bd-form-wrapper">
+          <!-- Banner referensi laporan asal -->
+          <div class="laporan-asal-banner hidden" id="bd-laporan-asal-banner"></div>
+          <!-- Hidden input untuk ID laporan asal -->
+          <input type="hidden" id="bd-laporan-asal-id" />
+
+          <div class="form-group">
+            <label class="form-label">Pilih Mesin <span class="required">*</span></label>
+            <div class="searchable-select-wrap" id="bd-machine-wrap">
+              <div class="ss-selected" id="bd-machine-display">-- Pilih Mesin --</div>
+              <div class="ss-dropdown hidden" id="bd-machine-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                <div class="ss-list" id="bd-machine-list"></div>
+              </div>
+              <input type="hidden" id="bd-machine" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Jenis Kerusakan <span class="required">*</span></label>
+            <div class="searchable-select-wrap" id="bd-failure-wrap">
+              <div class="ss-selected" id="bd-failure-display">-- Pilih Jenis Kerusakan --</div>
+              <div class="ss-dropdown hidden" id="bd-failure-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari jenis kerusakan…" autocomplete="off" /></div>
+                <div class="ss-list" id="bd-failure-list"></div>
+              </div>
+              <input type="hidden" id="bd-failure" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kerusakan telah Selesai Diperbaiki pada <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="datetime-local" id="bd-downtime" />
+          </div>
+
+          <!-- Dynamic Description Rows -->
+          <div id="bd-desc-list"></div>
+
+          <button class="btn btn-ghost btn-add-desc" id="bd-add-desc-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Tambah Deskripsi <span class="required">*</span>
+          </button>
+
+          <div class="form-group" style="margin-top:16px">
+            <label class="form-label">Nama Teknisi <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="text" id="bd-tech-name" placeholder="Nama lengkap Anda" />
+          </div>
+          <button class="btn btn-danger btn-submit-tech" id="bd-submit-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Kirim Laporan Breakdown Maintenance
+          </button>
+        </div><!-- /bd-form-wrapper -->
+      </div>
+
+      <!-- Machine History (Tech) -->
+      <div class="tech-view" id="tech-machine-hist">
+        <div class="tech-view-header">
+          <button class="back-btn" data-back="tech-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <h2>Riwayat Mesin</h2>
+        </div>
+        <!-- Filter bar (same as supervisor) -->
+        <div class="filter-bar glass tech-filter-bar">
+          <div class="filter-group">
+            <label>Mesin</label>
+            <select class="form-input" id="tech-hist-machine-select"><option value="">Semua Mesin</option></select>
+          </div>
+          <div class="filter-group">
+            <label>Tanggal Dari</label>
+            <input class="form-input" type="date" id="tech-hist-date-from" />
+          </div>
+          <div class="filter-group">
+            <label>Tanggal Sampai</label>
+            <input class="form-input" type="date" id="tech-hist-date-to" />
+          </div>
+          <div class="filter-group">
+            <label>Tipe</label>
+            <select class="form-input" id="tech-hist-type-filter">
+              <option value="">Semua Tipe</option>
+              <option value="breakdown">Breakdown</option>
+              <option value="pm">Preventif</option>
+              <option value="sparepart">Sparepart</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm" id="tech-hist-filter-btn">Filter</button>
+        </div>
+        <div class="tech-timeline" id="tech-timeline"></div>
+      </div>
+
+      <!-- Part Condition -->
+      <div class="tech-view" id="tech-sparepart">
+        <div class="tech-view-header">
+          <button class="back-btn" data-back="tech-home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <h2>Kondisi Sparepart</h2>
+        </div>
+        <div class="sparepart-list" id="tech-sparepart-list"></div>
+      </div>
+
+    </div><!-- end tech-content -->
+  </div><!-- end tech-layout -->
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PRODUCTION LAYOUT — Form Kerusakan + Laporan Mandiri
+════════════════════════════════════════════════ -->
+<div id="page-production" class="page">
+  <div class="tech-layout">
+
+    <!-- Top float bar -->
+    <div class="tech-float-bar">
+      <div class="tech-role-badge">
+        <div class="brand-icon brand-icon-sm">
+          <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="14" height="14" rx="3" fill="#fff"/><rect x="22" y="4" width="14" height="14" rx="3" fill="#fff" opacity=".55"/><rect x="4" y="22" width="14" height="14" rx="3" fill="#fff" opacity=".55"/><rect x="22" y="22" width="14" height="14" rx="3" fill="#fff"/><rect x="14" y="14" width="12" height="12" rx="2" fill="var(--bg-2, #fff)"/></svg>
+        </div>
+        <div class="tech-role-info">
+          <span class="tech-role-name">PRIMA</span>
+          <span class="tech-role-tagline">Performance Recording and Inspection for Machine Assets</span>
+        </div>
+      </div>
+      <div class="tech-float-actions">
+        <div class="topbar-datetime" id="prod-header-date"></div>
+        <div class="tech-header-user">
+          <span class="tech-header-name" id="prod-header-name">Production</span>
+          <span class="tech-header-role">Production</span>
+        </div>
+        <div class="user-avatar tech-user-avatar" id="prod-avatar">PR</div>
+        <button class="topbar-logout-btn" id="prod-logout" title="Keluar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </button>
+        <button class="topbar-icon-btn" id="prod-theme-toggle" title="Ganti Tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="tech-content">
+
+      <!-- Welcome banner -->
+      <div class="sup-welcome req-welcome-banner" style="margin-bottom:24px">
+        <div class="sup-welcome-text">
+          <h2>Selamat datang, <span id="prod-name-display">Production</span> 👋</h2>
+          <p>Pilih menu di bawah untuk melaporkan kerusakan mesin atau mencatat perbaikan mandiri.</p>
+        </div>
+        <div class="sup-welcome-role">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Production
+        </div>
+      </div>
+
+      <!-- Nav menu -->
+      <div class="prod-nav" style="display:flex;gap:12px;margin-bottom:24px">
+        <button class="prod-nav-btn active" data-view="kerusakan" style="flex:1;padding:14px 16px;border-radius:12px;border:2px solid var(--border);background:var(--bg-2);cursor:pointer;font-size:14px;font-weight:600;color:var(--text-1);display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;color:var(--danger)"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Laporan Kerusakan
+        </button>
+        <button class="prod-nav-btn" data-view="mandiri" style="flex:1;padding:14px 16px;border-radius:12px;border:2px solid var(--border);background:var(--bg-2);cursor:pointer;font-size:14px;font-weight:600;color:var(--text-1);display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;color:var(--accent)"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+          Perbaikan Mandiri
+        </button>
+      </div>
+
+      <!-- ── VIEW: Form Laporan Kerusakan Mesin ── -->
+      <div class="prod-view active" id="prod-view-kerusakan">
+        <div class="tech-form glass">
+          <div class="req-form-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;color:var(--danger)"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Form Laporan Kerusakan Mesin</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nomor Work Request <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="text" id="prod-req-work-request" placeholder="Contoh: 285530" autocomplete="off" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Keterangan <span class="required">*</span></label>
+            <select class="form-input" id="prod-req-keterangan">
+              <option value="">-- Pilih Keterangan --</option>
+              <option value="Batch">Batch</option>
+              <option value="Non Batch">Non Batch</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Mesin yang Mengalami Kerusakan <span class="required">*</span></label>
+            <div class="searchable-select-wrap" id="prod-req-machine-wrap">
+              <div class="ss-selected" id="prod-req-machine-display">-- Pilih Mesin --</div>
+              <div class="ss-dropdown hidden" id="prod-req-machine-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                <div class="ss-list" id="prod-req-machine-list"></div>
+              </div>
+              <input type="hidden" id="prod-req-machine" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Jenis Kerusakan yang Terlihat <span class="required">*</span></label>
+            <div class="searchable-select-wrap" id="prod-req-failure-type-wrap">
+              <div class="ss-selected" id="prod-req-failure-type-display">-- Pilih Jenis Kerusakan --</div>
+              <div class="ss-dropdown hidden" id="prod-req-failure-type-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari jenis kerusakan…" autocomplete="off" /></div>
+                <div class="ss-list" id="prod-req-failure-type-list"></div>
+              </div>
+              <input type="hidden" id="prod-req-failure-type" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Deskripsi Kerusakan <span class="required">*</span></label>
+            <textarea class="form-input form-textarea" id="prod-req-description" placeholder="Jelaskan kondisi kerusakan yang Anda temukan secara detail…" rows="4"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Sejak Kapan Kerusakan Terjadi</label>
+            <input class="form-input form-input-lg" type="datetime-local" id="prod-req-since" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nama Pelapor <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="text" id="prod-req-reporter-name" placeholder="Nama lengkap Anda" />
+          </div>
+
+          <button class="btn btn-danger btn-submit-tech" id="prod-req-submit-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            Kirim Laporan Kerusakan
+          </button>
+        </div>
+      </div><!-- /prod-view-kerusakan -->
+
+      <!-- ── VIEW: Laporan Perbaikan Mandiri ── -->
+      <div class="prod-view" id="prod-view-mandiri">
+        <div class="tech-form glass" id="prod-bd-form-wrapper">
+          <!-- Banner mandiri -->
+          <div class="laporan-asal-banner hidden" id="prod-bd-laporan-asal-banner"></div>
+          <input type="hidden" id="prod-bd-laporan-asal-id" />
+
+          <div class="form-group">
+            <label class="form-label">Pilih Mesin <span class="required">*</span></label>
+            <div class="searchable-select-wrap" id="prod-bd-machine-wrap">
+              <div class="ss-selected" id="prod-bd-machine-display">-- Pilih Mesin --</div>
+              <div class="ss-dropdown hidden" id="prod-bd-machine-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+                <div class="ss-list" id="prod-bd-machine-list"></div>
+              </div>
+              <input type="hidden" id="prod-bd-machine" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Jenis Kerusakan <span class="required">*</span></label>
+            <div class="searchable-select-wrap" id="prod-bd-failure-wrap">
+              <div class="ss-selected" id="prod-bd-failure-display">-- Pilih Jenis Kerusakan --</div>
+              <div class="ss-dropdown hidden" id="prod-bd-failure-dropdown">
+                <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari jenis kerusakan…" autocomplete="off" /></div>
+                <div class="ss-list" id="prod-bd-failure-list"></div>
+              </div>
+              <input type="hidden" id="prod-bd-failure" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Kerusakan telah Selesai Diperbaiki pada <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="datetime-local" id="prod-bd-downtime" />
+          </div>
+
+          <!-- Dynamic Description Rows -->
+          <div id="prod-bd-desc-list"></div>
+
+          <button class="btn btn-ghost btn-add-desc" id="prod-bd-add-desc-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Tambah Deskripsi <span class="required">*</span>
+          </button>
+
+          <div class="form-group" style="margin-top:16px">
+            <label class="form-label">Nama Teknisi / Operator <span class="required">*</span></label>
+            <input class="form-input form-input-lg" type="text" id="prod-bd-tech-name" placeholder="Nama lengkap Anda" />
+          </div>
+
+          <button class="btn btn-danger btn-submit-tech" id="prod-bd-submit-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Kirim Laporan Perbaikan Mandiri
+          </button>
+        </div><!-- /prod-bd-form-wrapper -->
+      </div><!-- /prod-view-mandiri -->
+
+    </div><!-- end tech-content -->
+  </div><!-- end tech-layout -->
+</div>
+<!-- TOAST -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ADD PM MODAL -->
+<div class="modal-overlay hidden" id="pm-modal-overlay">
+  <div class="modal glass">
+    <div class="modal-header">
+      <h3>Tambah Jadwal PM</h3>
+      <button class="modal-close" id="pm-modal-close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Mesin <span class="required">*</span></label>
+        <div class="searchable-select-wrap" id="modal-machine-wrap">
+          <div class="ss-selected" id="modal-machine-display">-- Pilih Mesin --</div>
+          <div class="ss-dropdown hidden" id="modal-machine-dropdown">
+            <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari mesin…" autocomplete="off" /></div>
+            <div class="ss-list" id="modal-machine-list"></div>
+          </div>
+          <input type="hidden" id="modal-machine" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tipe Perawatan <span class="required">*</span></label>
+        <select class="form-input" id="modal-type">
+          <option value="">-- Pilih Tipe --</option>
+          <option value="PM 3 Bulanan">PM 3 Bulanan</option>
+          <option value="PM 6 Bulanan">PM 6 Bulanan</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tanggal Jadwal <span class="required">*</span></label>
+        <input class="form-input" type="date" id="modal-date" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Prosedur PM</label>
+        <div class="searchable-select-wrap" id="modal-prosedur-wrap">
+          <div class="ss-selected ss-placeholder" id="modal-prosedur-display">-- Pilih Paket Prosedur --</div>
+          <div class="ss-dropdown hidden" id="modal-prosedur-dropdown">
+            <div class="ss-search-wrap"><input class="ss-search" type="text" placeholder="Cari prosedur…" autocomplete="off" /></div>
+            <div class="ss-list" id="modal-prosedur-list"></div>
+          </div>
+          <input type="hidden" id="modal-prosedur" />
+        </div>
+        <div id="modal-prosedur-preview" class="modal-prosedur-preview hidden"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="pm-modal-cancel">Batal</button>
+      <button class="btn btn-primary" id="pm-modal-save">Simpan Jadwal</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="script.js"></script>
+
+<!-- GLOBAL FOOTER -->
+<footer class="prima-global-footer">
+  Created with Curiosity by <a href="https://www.linkedin.com/in/muhamad-adha-ismail/" target="_blank" rel="noopener noreferrer" class="prima-footer-link">Adha</a> (BTS Batch 5)
+</footer>
+</body>
+</html>
